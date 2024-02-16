@@ -3,6 +3,7 @@ package com.github.murzagalin.evaluator
 import com.github.murzagalin.evaluator.ast.BooleanAstEvaluator
 import com.github.murzagalin.evaluator.ast.DoubleAstEvaluator
 import com.github.murzagalin.evaluator.ast.Expression
+import com.github.murzagalin.evaluator.ast.IntAstEvaluator
 import com.github.murzagalin.evaluator.ast.Parser
 import com.github.murzagalin.evaluator.ast.StringAstEvaluator
 
@@ -15,6 +16,7 @@ class Evaluator(
 
     private val booleanEvaluator = BooleanAstEvaluator()
     private val doubleEvaluator = DoubleAstEvaluator()
+    private val intEvaluator = IntAstEvaluator()
     private val stringEvaluator = StringAstEvaluator()
     private val parser = Parser()
     private val tokenizer = Tokenizer(
@@ -34,6 +36,16 @@ class Evaluator(
         return doubleEvaluator.evaluate(parsed, values)
     }
 
+    fun evaluateInt(
+        expression: String,
+        values: Map<String, Any> = emptyMap()
+    ): Int {
+        val tokenized = tokenizer.tokenize(expression)
+        val parsed = parser.parse(tokenized)
+
+        return intEvaluator.evaluate(parsed, values)
+    }
+
     fun evaluateBoolean(
         expression: String,
         values: Map<String, Any> = emptyMap()
@@ -48,6 +60,11 @@ class Evaluator(
         expression: Expression,
         values: Map<String, Any> = emptyMap()
     ) = doubleEvaluator.evaluate(expression, values)
+
+    fun evaluateInt(
+        expression: Expression,
+        values: Map<String, Any> = emptyMap()
+    ) = intEvaluator.evaluate(expression, values)
 
     fun evaluateBoolean(
         expression: Expression,

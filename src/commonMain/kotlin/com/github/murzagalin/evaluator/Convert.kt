@@ -11,6 +11,13 @@ object Convert {
         else -> false
     }
 
+    fun toInt(value: Any?) = when (value) {
+        null -> 0
+        is Int -> value
+        is Double -> value.toInt()
+        else -> value.toString().toIntOrNull() ?: 0
+    }
+
     fun toDouble(value: Any?) = when (value) {
         null -> 0.0
         is Double -> value
