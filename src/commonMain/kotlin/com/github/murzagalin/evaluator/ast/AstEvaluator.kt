@@ -107,7 +107,6 @@ internal class AstEvaluator(private val values: Map<String, Any> = emptyMap()): 
             arguments.add(evaluate(arg))
         }
 
-        return functionCall.token(arguments)
+        return functionCall.token(values, arguments)
     }
-
 }
