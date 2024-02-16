@@ -11,11 +11,7 @@ internal class AstEvaluator(private val values: Map<String, Any> = emptyMap()): 
         is Token.Operand.Number -> operand.value
         is Token.Operand.Boolean -> operand.value
         is Token.Operand.Str -> operand.value
-        is Token.Operand.Variable -> requireNotNull(values[operand.value]) {
-            "Could not resolve variable '${operand.value}'"
-        }.let {
-            if (it is Int) it.toDouble() else it
-        }
+        is Token.Operand.Variable -> values[operand.value]
     }
 
     override fun visitUnary(unary: Expression.Unary): Any {
@@ -85,7 +81,7 @@ internal class AstEvaluator(private val values: Map<String, Any> = emptyMap()): 
         return eval(left.toDouble(), right.toDouble())
     }
 
-    override fun visitTernary(ternary: Expression.Ternary): Any {
+    override fun visitTernary(ternary: Expression.Ternary): Any? {
         if (ternary.token is Token.Operator.TernaryIfElse) {
             val left = evaluate(ternary.firstExpression)
             require(left is Boolean) {
@@ -101,8 +97,8 @@ internal class AstEvaluator(private val values: Map<String, Any> = emptyMap()): 
         }
     }
 
-    override fun visitFunctionCall(functionCall: Expression.FunctionCall): Any {
-        val arguments = mutableListOf<Any>()
+    override fun visitFunctionCall(functionCall: Expression.FunctionCall): Any? {
+        val arguments = mutableListOf<Any?>()
 
         for (arg in functionCall.arguments) {
             arguments.add(evaluate(arg))

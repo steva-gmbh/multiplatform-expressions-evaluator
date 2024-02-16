@@ -51,7 +51,7 @@ sealed interface Token {
         val function: Function
     ) : Token {
 
-        operator fun invoke(values: Map<String, Any>, args: List<Any>) = function(values, *args.toTypedArray())
+        operator fun invoke(values: Map<String, Any?>, args: List<Any?>) = function(values, *args.toTypedArray())
 
         object Delimiter: Token
     }

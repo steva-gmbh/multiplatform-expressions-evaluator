@@ -8,7 +8,7 @@ abstract class Function(val name: String, val argsCount: IntRange) {
 
     constructor(name: String, minArgsCount: Int, maxArgsCount: Int): this(name, minArgsCount..maxArgsCount)
 
-    abstract operator fun invoke(values: Map<String, Any>, vararg args: Any): Any
+    abstract operator fun invoke(values: Map<String, Any?>, vararg args: Any?): Any?
 }
 
 private fun <T> Array<T>.getAsNumber(index: Int, lazyMessage: () -> Any): Number {
@@ -38,7 +38,7 @@ abstract class OneNumberArgumentFunction(name: String, argsCount: IntRange) : Fu
 
     constructor(name: String, minArgsCount: Int, maxArgsCount: Int): this(name, minArgsCount..maxArgsCount)
 
-    override fun invoke(values: Map<String, Any>, vararg args: Any): Any {
+    override fun invoke(values: Map<String, Any?>, vararg args: Any?): Any? {
         require(args.size == 1) { "$name function requires 1 argument" }
         val operand = args.getAsNumber(0) {
             "$name is called with argument type ${Number::class.simpleName}, but supports only numbers"
@@ -109,7 +109,7 @@ object DefaultFunctions {
     }
 
     val LOG = object: Function("log", 2) {
-        override fun invoke(values: Map<String, Any>, vararg args: Any): Any {
+        override fun invoke(values: Map<String, Any?>, vararg args: Any?): Any {
             val operand = args.getAsNumber(0) { "$name argument must be a number" }
             val base = args.getAsNumber(1) { "$name base must be a number" }
 
@@ -118,26 +118,26 @@ object DefaultFunctions {
     }
 
     val MIN = object: Function("min", 1..Int.MAX_VALUE) {
-        override fun invoke(values: Map<String, Any>, vararg args: Any): Any {
-            return args.toList().flatten().minByOrNull {Convert.toDouble(it)}!!
+        override fun invoke(values: Map<String, Any?>, vararg args: Any?): Any? {
+            return args.filterNotNull().flatten().minByOrNull {Convert.toDouble(it)}!!
         }
     }
 
     val AVG = object: Function("avg", 1..Int.MAX_VALUE) {
-        override fun invoke(values: Map<String, Any>, vararg args: Any): Any {
-            return args.toList().flatten().map {Convert.toDouble(it)}.average()
+        override fun invoke(values: Map<String, Any?>, vararg args: Any?): Any? {
+            return args.filterNotNull().flatten().map {Convert.toDouble(it)}.average()
         }
     }
 
     val SUM = object: Function("sum", 1..Int.MAX_VALUE) {
-        override fun invoke(values: Map<String, Any>, vararg args: Any): Any {
-            return args.toList().flatten().sumOf {Convert.toDouble(it)}
+        override fun invoke(values: Map<String, Any?>, vararg args: Any?): Any? {
+            return args.filterNotNull().flatten().sumOf {Convert.toDouble(it)}
         }
     }
 
     val MAX = object: Function("max", 1..Int.MAX_VALUE) {
-        override fun invoke(values: Map<String, Any>, vararg args: Any): Any {
-            return args.toList().flatten().maxByOrNull {Convert.toDouble(it)}!!
+        override fun invoke(values: Map<String, Any?>, vararg args: Any?): Any? {
+            return args.filterNotNull().flatten().maxByOrNull {Convert.toDouble(it)}!!
         }
     }
 

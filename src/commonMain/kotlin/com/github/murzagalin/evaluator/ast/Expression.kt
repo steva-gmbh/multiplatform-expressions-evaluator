@@ -4,7 +4,7 @@ import com.github.murzagalin.evaluator.Token
 
 sealed class Expression {
 
-    abstract fun visit(visitor: AstVisitor): Any
+    abstract fun visit(visitor: AstVisitor): Any?
 
     data class Unary(
         val token: Token.Operator,
@@ -46,9 +46,9 @@ sealed class Expression {
 
 
 interface AstVisitor {
-    fun visitUnary(unary: Expression.Unary): Any
-    fun visitBinary(binary: Expression.Binary): Any
-    fun visitTernary(ternary: Expression.Ternary): Any
-    fun visitFunctionCall(functionCall: Expression.FunctionCall): Any
-    fun visitTerminal(terminal: Expression.Terminal): Any
+    fun visitUnary(unary: Expression.Unary): Any?
+    fun visitBinary(binary: Expression.Binary): Any?
+    fun visitTernary(ternary: Expression.Ternary): Any?
+    fun visitFunctionCall(functionCall: Expression.FunctionCall): Any?
+    fun visitTerminal(terminal: Expression.Terminal): Any?
 }
