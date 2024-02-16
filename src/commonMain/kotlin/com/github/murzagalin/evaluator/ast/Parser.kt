@@ -17,7 +17,7 @@ terminal -> function | variable | number | boolean
 function   -> name "(" ( arguments )* ")"
 arguments  -> expression ( ',' expression )*
 variable   -> name
-name       -> CHAR ( CHAR | DIGIT )*
+name       -> CHAR ( CHAR | DIGIT | "." )*
 boolean    -> "true" | "false" | "TRUE" | "FALSE"
 number     -> DIGIT ( DIGIT )*
 */

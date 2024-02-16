@@ -97,7 +97,7 @@ internal class Tokenizer(
     }
 
     private fun String.parseVarOrConstOrFunction(): PUnit {
-        var lastIxOfName = indexOfFirst { it !in letterChars && it !in digitChars }
+        var lastIxOfName = indexOfFirst { it !in letterChars && it !in digitChars && it != '.' }
         if (lastIxOfName == -1) lastIxOfName = length
         val name = substring(0, lastIxOfName)
         val constant = constantsMap[name]
@@ -146,5 +146,3 @@ internal class Tokenizer(
         constructor(token: Token, indexOffset: Int): this(listOf(token), indexOffset)
     }
 }
-
-
