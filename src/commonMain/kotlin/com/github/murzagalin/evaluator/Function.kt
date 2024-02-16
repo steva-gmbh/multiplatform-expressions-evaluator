@@ -117,41 +117,37 @@ object DefaultFunctions {
         }
     }
 
-    val MIN = object: Function("min", 2..Int.MAX_VALUE) {
+    val MIN = object: Function("min", 1..Int.MAX_VALUE) {
         override fun invoke(values: Map<String, Any>, vararg args: Any): Any {
-            require(args.size > 1) { "$name should be called with at least 2 arguments" }
-            require(args.all { it is Number }) { "$name function requires all arguments to be numbers" }
-
-            return args.minByOrNull { (it as Number).toDouble() }!!
+            return args.toList().flatten().minByOrNull {Convert.toDouble(it)}!!
         }
     }
 
-    val AVG = object: Function("avg", 2..Int.MAX_VALUE) {
+    val AVG = object: Function("avg", 1..Int.MAX_VALUE) {
         override fun invoke(values: Map<String, Any>, vararg args: Any): Any {
-            require(args.size > 1) { "$name should be called with at least 2 arguments" }
-            require(args.all { it is Number }) { "$name function requires all arguments to be numbers" }
-
-            return args.map { (it as Number).toDouble() }.average()
+            return args.toList().flatten().map {Convert.toDouble(it)}.average()
         }
     }
 
-    val SUM = object: Function("sum", 2..Int.MAX_VALUE) {
+    val SUM = object: Function("sum", 1..Int.MAX_VALUE) {
         override fun invoke(values: Map<String, Any>, vararg args: Any): Any {
-            require(args.size > 1) { "$name should be called with at least 2 arguments" }
-            require(args.all { it is Number }) { "$name function requires all arguments to be numbers" }
-
-            return args.sumOf { (it as Number).toDouble() }
+            return args.toList().flatten().sumOf {Convert.toDouble(it)}
         }
     }
 
-    val MAX = object: Function("max", 2..Int.MAX_VALUE) {
+    val MAX = object: Function("max", 1..Int.MAX_VALUE) {
         override fun invoke(values: Map<String, Any>, vararg args: Any): Any {
-            require(args.size > 1) { "$name should be called with at least 2 arguments" }
-            require(args.all { it is Number }) { "$name function requires all arguments to be numbers" }
-
-            return args.maxByOrNull { (it as Number).toDouble() }!!
+            return args.toList().flatten().maxByOrNull {Convert.toDouble(it)}!!
         }
     }
 
     val ALL = listOf(ABS, ACOS, ASIN, ATAN, COS, COSH, SINH, SIN, TAN, TANH, CEIL, FLOOR, ROUND, LN, LOG, MIN, MAX, AVG, SUM)
+
+    fun List<Any>.flatten() =
+        flatMap {
+            when (it) {
+                is List<*> -> it
+                else -> listOf(it)
+            }
+        }
 }
