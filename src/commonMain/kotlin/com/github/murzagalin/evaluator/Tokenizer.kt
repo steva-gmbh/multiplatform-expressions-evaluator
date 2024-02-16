@@ -9,6 +9,7 @@ internal class Tokenizer(
 
     companion object {
         private val digitChars = ('0'..'9').toSet()
+        private val extraNameChars = setOf('.', '[', ']')
         private val letterChars = ('A'..'Z').toSet() + ('a'..'z').toSet() + '_' + '$' + '@'
     }
 
@@ -98,7 +99,7 @@ internal class Tokenizer(
     }
 
     private fun String.parseVarOrConstOrFunction(): PUnit {
-        var lastIxOfName = indexOfFirst { it !in letterChars && it !in digitChars && it != '.' }
+        var lastIxOfName = indexOfFirst { it !in letterChars && it !in digitChars && it !in extraNameChars }
         if (lastIxOfName == -1) lastIxOfName = length
         val name = substring(0, lastIxOfName)
         val constant = constantsMap[name]
