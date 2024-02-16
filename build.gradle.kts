@@ -1,5 +1,5 @@
 plugins {
-    kotlin("multiplatform") version "1.5.30"
+    kotlin("multiplatform") version "1.9.20"
     id("maven-publish")
     id("signing")
 }
@@ -71,7 +71,6 @@ repositories {
 }
 
 kotlin {
-
     targets {
         jvm {
             compilations.all {
@@ -81,23 +80,16 @@ kotlin {
                 useJUnit()
             }
         }
-        js(BOTH) {
-            browser {
-                commonWebpackConfig {
-                    cssSupport.enabled = true
-                }
-            }
+        js(IR) {
+            browser()
             nodejs()
         }
-
         macosArm64()
         iosX64()
         iosArm64()
-        iosArm32()
         iosSimulatorArm64()
         watchosArm32()
         watchosArm64()
-        watchosX86()
         watchosX64()
         watchosSimulatorArm64()
         tvosArm64()
