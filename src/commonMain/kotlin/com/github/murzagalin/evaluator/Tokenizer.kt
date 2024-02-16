@@ -12,7 +12,7 @@ internal class Tokenizer(
         private val letterChars = ('A'..'Z').toSet() + ('a'..'z').toSet() + '_' + '$' + '@'
     }
 
-    private val functionsMap = functions.associateBy { it.name }
+    private val functionsMap = functions.associateBy { it.name.lowercase() }
     private val constantsMap = constants.associate { it.name to it.value }
 
     fun tokenize(expression: String): List<Token> {
@@ -105,7 +105,7 @@ internal class Tokenizer(
 
         return when {
             lastIxOfName != length && get(lastIxOfName) == '(' -> {
-                val function = requireNotNull(functionsMap[name]) { "function not found $name" }
+                val function = requireNotNull(functionsMap[name.lowercase()]) { "function not found $name" }
                 val argsCount = getArgsCount(this, name)
                 require(argsCount in function.argsCount) { "function $name is called with wrong number of parameters" }
 
