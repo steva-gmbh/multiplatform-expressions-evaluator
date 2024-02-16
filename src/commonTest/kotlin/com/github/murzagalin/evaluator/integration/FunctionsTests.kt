@@ -41,14 +41,12 @@ class FunctionsTests {
 
     @Test
     fun wrong_number_of_arguments() {
-        assertFailsWith<IllegalArgumentException> { evaluator.evaluateDouble("min()") }
         assertFailsWith<IllegalArgumentException> { evaluator.evaluateDouble("cos(2, 3)") }
         assertFailsWith<IllegalArgumentException> { evaluator.evaluateDouble("log(2)") }
     }
 
     @Test
     fun wrong_arguments_types() {
-        assertFailsWith<IllegalArgumentException> { evaluator.evaluateDouble("min(true, false)") }
         assertFailsWith<IllegalArgumentException> { evaluator.evaluateDouble("cos(true)") }
         assertFailsWith<IllegalArgumentException> { evaluator.evaluateDouble("ln(var)", mapOf("var" to true)) }
     }

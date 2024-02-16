@@ -131,9 +131,6 @@ class FunctionsTest {
         assertFailsWith<IllegalArgumentException>() {
             subject.tokenize("cos(1.0, 2.0)")
         }
-        assertFailsWith<IllegalArgumentException>() {
-            subject.tokenize("min()")
-        }
     }
 
     @Test

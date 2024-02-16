@@ -119,7 +119,7 @@ object DefaultFunctions {
 
     val MIN = object: Function("min", 1..Int.MAX_VALUE) {
         override fun invoke(values: Map<String, Any?>, vararg args: Any?): Any? {
-            return args.filterNotNull().flatten().minByOrNull {Convert.toDouble(it)}!!
+            return args.filterNotNull().flatten().minByOrNull {Convert.toDouble(it)}
         }
     }
 
