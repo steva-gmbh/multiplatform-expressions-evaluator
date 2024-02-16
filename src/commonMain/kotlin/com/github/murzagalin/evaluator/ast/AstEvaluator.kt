@@ -12,6 +12,8 @@ internal class AstEvaluator(private val values: Map<String, Any> = emptyMap()): 
         is Token.Operand.Boolean -> operand.value
         is Token.Operand.Variable -> requireNotNull(values[operand.value]) {
             "Could not resolve variable '${operand.value}'"
+        }.let {
+            if (it is Int) it.toDouble() else it
         }
     }
 
