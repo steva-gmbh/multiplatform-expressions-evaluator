@@ -6,8 +6,11 @@ sealed interface Token {
 
     sealed interface Operand : Token {
         @JvmInline
-        value class Number(val value: Double) : Operand {
-            constructor(value: Int): this(value.toDouble())
+        value class DoubleNumber(val value: Double) : Operand {
+        }
+
+        @JvmInline
+        value class IntNumber(val value: Int) : Operand {
         }
 
         @JvmInline

@@ -93,9 +93,13 @@ internal class Tokenizer(
         var lastIxOfNumber = indexOfFirst { it !in (digitChars + doubleDelimiter) }
         if (lastIxOfNumber == -1) lastIxOfNumber = length
         val strNum = substring(0, lastIxOfNumber)
-        val parsedNumber = requireNotNull(strNum.toDoubleOrNull()) { "error parsing number '$strNum'" }
-
-        return PUnit(Token.Operand.Number(parsedNumber), lastIxOfNumber)
+        return if (strNum.contains(".")) {
+            val parsedNumber = requireNotNull(strNum.toDoubleOrNull()) { "error parsing number '$strNum'" }
+            PUnit(Token.Operand.DoubleNumber(parsedNumber), lastIxOfNumber)
+        } else {
+            val parsedNumber = requireNotNull(strNum.toIntOrNull()) { "error parsing number '$strNum'" }
+            PUnit(Token.Operand.IntNumber(parsedNumber), lastIxOfNumber)
+        }
     }
 
     private fun String.parseVarOrConstOrFunction(): PUnit {
@@ -112,7 +116,7 @@ internal class Tokenizer(
 
                 PUnit(Token.FunctionCall(argsCount, function), name.length)
             }
-            constant != null -> PUnit(Token.Operand.Number(constant), lastIxOfName)
+            constant != null -> PUnit(Token.Operand.DoubleNumber(constant), lastIxOfName)
             else -> PUnit(Token.Operand.Variable(substring(0, lastIxOfName)), lastIxOfName)
         }
     }
@@ -144,7 +148,8 @@ internal class Tokenizer(
 
     private fun supposedToBeUnaryOperator(result: List<Token>): Boolean {
         return result.isEmpty() ||
-                result.last() !is Token.Operand.Number &&
+                result.last() !is Token.Operand.IntNumber &&
+                result.last() !is Token.Operand.DoubleNumber &&
                 result.last() !is Token.Bracket.Right &&
                 result.last() !is Token.Operand.Variable
     }

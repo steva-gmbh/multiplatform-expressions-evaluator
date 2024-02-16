@@ -8,7 +8,8 @@ internal class AstEvaluator(private val values: Map<String, Any> = emptyMap()): 
     fun evaluate(expression: Expression) = expression.visit(this)
 
     override fun visitTerminal(terminal: Expression.Terminal) = when(val operand = terminal.token) {
-        is Token.Operand.Number -> operand.value
+        is Token.Operand.IntNumber -> operand.value
+        is Token.Operand.DoubleNumber -> operand.value
         is Token.Operand.Boolean -> operand.value
         is Token.Operand.Str -> operand.value
         is Token.Operand.Variable -> values[operand.value]
