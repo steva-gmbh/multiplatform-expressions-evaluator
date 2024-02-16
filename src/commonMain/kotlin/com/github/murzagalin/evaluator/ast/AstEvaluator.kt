@@ -10,6 +10,7 @@ internal class AstEvaluator(private val values: Map<String, Any> = emptyMap()): 
     override fun visitTerminal(terminal: Expression.Terminal) = when(val operand = terminal.token) {
         is Token.Operand.Number -> operand.value
         is Token.Operand.Boolean -> operand.value
+        is Token.Operand.Str -> operand.value
         is Token.Operand.Variable -> requireNotNull(values[operand.value]) {
             "Could not resolve variable '${operand.value}'"
         }.let {

@@ -20,6 +20,7 @@ variable   -> name
 name       -> CHAR ( CHAR | DIGIT | "." )*
 boolean    -> "true" | "false" | "TRUE" | "FALSE"
 number     -> DIGIT ( DIGIT )*
+string     -> "'" .* "'"
 */
 
 internal class Parser {

@@ -59,6 +59,7 @@ internal class Tokenizer(
             str.startsWith("!=") -> PUnit(Token.Operator.NotEqual, 2)
             symbol in digitChars -> str.parseStartingNumber()
             symbol in letterChars -> str.parseVarOrConstOrFunction()
+            symbol == '\'' -> str.parseString()
             symbol == argumentsDelimiter -> PUnit(Token.FunctionCall.Delimiter, 1)
             symbol == '+' -> getPlus(result)
             symbol == '-' -> getMinus(result)
@@ -113,6 +114,14 @@ internal class Tokenizer(
             constant != null -> PUnit(Token.Operand.Number(constant), lastIxOfName)
             else -> PUnit(Token.Operand.Variable(substring(0, lastIxOfName)), lastIxOfName)
         }
+    }
+
+    private fun String.parseString(): PUnit {
+        var lastIxOfNumber = substring(1).indexOfFirst { it == '\'' } + 2
+        if (lastIxOfNumber > length) lastIxOfNumber = length
+        val str = substring(1, lastIxOfNumber - 1)
+
+        return PUnit(Token.Operand.Str(str), lastIxOfNumber)
     }
 
     private fun getArgsCount(expression: String, functionName: String): Int {

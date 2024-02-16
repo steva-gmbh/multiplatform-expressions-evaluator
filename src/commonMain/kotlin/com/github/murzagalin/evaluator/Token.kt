@@ -15,6 +15,9 @@ sealed interface Token {
 
         @JvmInline
         value class Variable(val value: String) : Operand
+
+        @JvmInline
+        value class Str(val value: String) : Operand
     }
 
     sealed interface Operator : Token {
