@@ -33,14 +33,14 @@ class ParserFunctionsTest {
         val expression = listOf(
             functionCall,
             Token.Bracket.Left,
-            Token.Operand.Number(1),
+            Token.Operand.IntNumber(1),
             Token.Bracket.Right
         )
 
         assertEquals(
             Expression.FunctionCall(
                 functionCall,
-                listOf(Expression.Terminal(Token.Operand.Number(1)))
+                listOf(Expression.Terminal(Token.Operand.IntNumber(1)))
             ),
             subject.parse(expression)
         )
@@ -52,13 +52,13 @@ class ParserFunctionsTest {
         val expression = listOf(
             functionCall,
             Token.Bracket.Left,
-            Token.Operand.Number(1),
+            Token.Operand.IntNumber(1),
             Token.FunctionCall.Delimiter,
-            Token.Operand.Number(2),
+            Token.Operand.IntNumber(2),
             Token.Operator.Plus,
-            Token.Operand.Number(3),
+            Token.Operand.IntNumber(3),
             Token.FunctionCall.Delimiter,
-            Token.Operand.Number(4),
+            Token.Operand.IntNumber(4),
             Token.Bracket.Right
         )
 
@@ -66,13 +66,13 @@ class ParserFunctionsTest {
             Expression.FunctionCall(
                 functionCall,
                 listOf(
-                    Expression.Terminal(Token.Operand.Number(1)),
+                    Expression.Terminal(Token.Operand.IntNumber(1)),
                     Expression.Binary(
                         Token.Operator.Plus,
-                        Expression.Terminal(Token.Operand.Number(2)),
-                        Expression.Terminal(Token.Operand.Number(3))
+                        Expression.Terminal(Token.Operand.IntNumber(2)),
+                        Expression.Terminal(Token.Operand.IntNumber(3))
                     ),
-                    Expression.Terminal(Token.Operand.Number(4)),
+                    Expression.Terminal(Token.Operand.IntNumber(4)),
                 )
             ),
             subject.parse(expression)
@@ -91,14 +91,14 @@ class ParserFunctionsTest {
             variable,
             Token.Bracket.Right,
             Token.Operator.Power,
-            Token.Operand.Number(2),
+            Token.Operand.IntNumber(2),
             Token.Operator.Plus,
             cos,
             Token.Bracket.Left,
             variable,
             Token.Bracket.Right,
             Token.Operator.Power,
-            Token.Operand.Number(2),
+            Token.Operand.IntNumber(2),
         )
 
         assertEquals(
@@ -110,7 +110,7 @@ class ParserFunctionsTest {
                         sin,
                         arguments = listOf(Expression.Terminal(variable))
                     ),
-                    Expression.Terminal(Token.Operand.Number(2))
+                    Expression.Terminal(Token.Operand.IntNumber(2))
                 ),
                 Expression.Binary(
                     Token.Operator.Power,
@@ -118,7 +118,7 @@ class ParserFunctionsTest {
                         cos,
                         arguments = listOf(Expression.Terminal(variable))
                     ),
-                    Expression.Terminal(Token.Operand.Number(2))
+                    Expression.Terminal(Token.Operand.IntNumber(2))
                 )
             ),
             subject.parse(expression)

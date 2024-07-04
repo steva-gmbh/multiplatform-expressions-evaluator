@@ -25,7 +25,7 @@ class VariablesTests{
             listOf(
                 Token.Operand.Variable("var"),
                 Token.Operator.Plus,
-                Token.Operand.Number(1.2)
+                Token.Operand.DoubleNumber(1.2)
             ),
             subject.tokenize("var+1.2")
         )
@@ -38,7 +38,7 @@ class VariablesTests{
                 Token.Bracket.Left,
                 Token.Operand.Variable("var_one"),
                 Token.Operator.Plus,
-                Token.Operand.Number(1.2),
+                Token.Operand.DoubleNumber(1.2),
                 Token.Bracket.Right,
                 Token.Operator.Power,
                 Token.Operand.Variable("var_two"),
@@ -66,7 +66,7 @@ class VariablesTests{
                 Token.Bracket.Left,
                 Token.Operand.Variable("var1"),
                 Token.Operator.Plus,
-                Token.Operand.Number(1.2),
+                Token.Operand.DoubleNumber(1.2),
                 Token.Bracket.Right,
                 Token.Operator.Power,
                 Token.Operand.Variable("var2"),

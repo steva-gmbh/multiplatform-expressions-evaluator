@@ -16,11 +16,11 @@ class ConstantsTest {
     @Test
     fun simple_constants() {
         assertContentEquals(
-            listOf(Token.Operand.Number(PI)),
+            listOf(Token.Operand.DoubleNumber(PI)),
             subject.tokenize("pi")
         )
         assertContentEquals(
-            listOf(Token.Operand.Number(E)),
+            listOf(Token.Operand.DoubleNumber(E)),
             subject.tokenize("e")
         )
     }
@@ -37,7 +37,7 @@ class ConstantsTest {
             listOf(
                 Token.FunctionCall(1, DefaultFunctions.SIN),
                 Token.Bracket.Left,
-                Token.Operand.Number(PI),
+                Token.Operand.DoubleNumber(PI),
                 Token.Bracket.Right
             ),
             subject.tokenize("sin(pi)")
@@ -46,7 +46,7 @@ class ConstantsTest {
             listOf(
                 Token.FunctionCall(1, DefaultFunctions.LN),
                 Token.Bracket.Left,
-                Token.Operand.Number(E),
+                Token.Operand.DoubleNumber(E),
                 Token.Bracket.Right
             ),
             subject.tokenize("ln(e)")

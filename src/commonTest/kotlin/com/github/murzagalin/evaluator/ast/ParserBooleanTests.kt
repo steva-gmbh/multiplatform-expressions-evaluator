@@ -106,17 +106,17 @@ class ParserBooleanTests {
     @Test
     fun comparison_equality_combination() {
         val expression = listOf(
-            Token.Operand.Number(1),
+            Token.Operand.IntNumber(1),
             Token.Operator.LessThan,
-            Token.Operand.Number(2),
+            Token.Operand.IntNumber(2),
             Token.Operator.And,
-            Token.Operand.Number(2),
+            Token.Operand.IntNumber(2),
             Token.Operator.GreaterEqualThan,
-            Token.Operand.Number(3),
+            Token.Operand.IntNumber(3),
             Token.Operator.Or,
-            Token.Operand.Number(4),
+            Token.Operand.IntNumber(4),
             Token.Operator.Equal,
-            Token.Operand.Number(5)
+            Token.Operand.IntNumber(5)
         )
 
         assertEquals(
@@ -126,19 +126,19 @@ class ParserBooleanTests {
                     Token.Operator.And,
                     Expression.Binary(
                         Token.Operator.LessThan,
-                        Expression.Terminal(Token.Operand.Number(1)),
-                        Expression.Terminal(Token.Operand.Number(2))
+                        Expression.Terminal(Token.Operand.IntNumber(1)),
+                        Expression.Terminal(Token.Operand.IntNumber(2))
                     ),
                     Expression.Binary(
                         Token.Operator.GreaterEqualThan,
-                        Expression.Terminal(Token.Operand.Number(2)),
-                        Expression.Terminal(Token.Operand.Number(3))
+                        Expression.Terminal(Token.Operand.IntNumber(2)),
+                        Expression.Terminal(Token.Operand.IntNumber(3))
                     ),
                 ),
                 Expression.Binary(
                     Token.Operator.Equal,
-                    Expression.Terminal(Token.Operand.Number(4)),
-                    Expression.Terminal(Token.Operand.Number(5))
+                    Expression.Terminal(Token.Operand.IntNumber(4)),
+                    Expression.Terminal(Token.Operand.IntNumber(5))
                 )
             ),
             subject.parse(expression)

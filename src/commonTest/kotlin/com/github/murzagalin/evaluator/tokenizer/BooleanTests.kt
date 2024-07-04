@@ -65,49 +65,49 @@ class BooleanTests {
     fun comparison() {
         assertEquals(
             listOf(
-                Token.Operand.Number(1),
+                Token.Operand.IntNumber(1),
                 Token.Operator.LessThan,
-                Token.Operand.Number(2)
+                Token.Operand.IntNumber(2)
             ),
             subject.tokenize("1<2")
         )
         assertEquals(
             listOf(
-                Token.Operand.Number(1),
+                Token.Operand.IntNumber(1),
                 Token.Operator.GreaterThan,
-                Token.Operand.Number(2)
+                Token.Operand.IntNumber(2)
             ),
             subject.tokenize("1>2")
         )
         assertEquals(
             listOf(
-                Token.Operand.Number(1),
+                Token.Operand.IntNumber(1),
                 Token.Operator.LessEqualThan,
-                Token.Operand.Number(2)
+                Token.Operand.IntNumber(2)
             ),
             subject.tokenize("1<=2")
         )
         assertEquals(
             listOf(
-                Token.Operand.Number(1),
+                Token.Operand.IntNumber(1),
                 Token.Operator.GreaterEqualThan,
-                Token.Operand.Number(2)
+                Token.Operand.IntNumber(2)
             ),
             subject.tokenize("1>=2")
         )
         assertEquals(
             listOf(
-                Token.Operand.Number(1),
+                Token.Operand.IntNumber(1),
                 Token.Operator.Equal,
-                Token.Operand.Number(2)
+                Token.Operand.IntNumber(2)
             ),
             subject.tokenize("1==2")
         )
         assertEquals(
             listOf(
-                Token.Operand.Number(1),
+                Token.Operand.IntNumber(1),
                 Token.Operator.NotEqual,
-                Token.Operand.Number(2)
+                Token.Operand.IntNumber(2)
             ),
             subject.tokenize("1!=2")
         )

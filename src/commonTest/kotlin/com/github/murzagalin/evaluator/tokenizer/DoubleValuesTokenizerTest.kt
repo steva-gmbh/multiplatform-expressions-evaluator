@@ -16,7 +16,7 @@ class DoubleValuesTokenizerTest {
         val result = subject.tokenize(expression)
 
         assertEquals(
-            listOf(Token.Operand.Number(234.532)),
+            listOf(Token.Operand.DoubleNumber(234.532)),
             result
         )
     }
