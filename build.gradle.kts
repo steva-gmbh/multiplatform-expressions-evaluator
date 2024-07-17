@@ -11,7 +11,7 @@ val signingKey = System.getenv("SIGNING_KEY")
 val signingPassword = System.getenv("SIGNING_PW")
 
 group = "io.github.murzagalin"
-version = githubRef?.split('/')?.last() ?: "0.1.0-SNAPSHOT"
+version = File("$rootDir/version").readText().trim()
 
 publishing {
     repositories {
